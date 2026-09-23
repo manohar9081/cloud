@@ -12,17 +12,13 @@ Built with [Bubble Tea](https://github.com/charmbracelet/bubbletea),
 [google.golang.org/api](https://github.com/googleapis/google-api-go-client).
 **No venv, no pip, no runtime dependencies — build once, run anywhere.**
 
-![clouds — EC2 instances view](screenshots/01-ec2-instances.png)
+## Interface
 
-## Screenshots
-
-| | |
-|---|---|
-| ![S3 objects drill-down](screenshots/02-s3-objects.png) | ![Downloading an object with g](screenshots/03-download.png) |
-| ![Object detail view](screenshots/04-object-detail.png) | ![Help screen](screenshots/05-help.png) |
-| ![GCP view — blue accent theme](screenshots/06-gcp-gce.png) | |
-
-The accent color follows the active cloud (AWS orange, GCP blue).
+`clouds` presents each service as a searchable, sortable resource table. Press
+`enter` to open details or drill into child resources, such as S3 objects,
+CloudWatch events, or GCS objects. The accent color follows the active cloud
+(AWS orange, GCP blue). Run `clouds --demo` for a no-credentials tour of the
+interface.
 
 ## Install & run
 
@@ -162,11 +158,11 @@ objects, GCE VMs, log entries, and more. No credentials, no network calls.
 Cloud/
 ├── main.go                   flags, --list-services, launches the TUI
 ├── cloud/      (was internal/cloud)
-│   ├── cloud/types.go        data model: Resource/Service/Provider + helpers
+│   ├── types.go              data model: Resource/Service/Provider + helpers
 │   ├── providers/
 │   │   ├── aws.go            aws-sdk-go-v2 services (pagination, bounded parallelism, S3 downloads)
 │   │   ├── gcp.go            google.golang.org/api services (incl. GCS downloads)
-│   │   └── demo.go           built-in sample data for --demo and tests
+│   │   └── demo.go           built-in sample data for --demo
 │   └── ui/
 │       ├── model.go          Bubble Tea model: table, filter, command bar, drill-down stack
 │       ├── styles.go         lipgloss theme (provider accents)
@@ -185,12 +181,10 @@ Design principles (mirroring k9s):
 - **API calls never block the UI** — every fetch runs on a goroutine; stale results are dropped.
 - **Providers are pluggable** — add a service by appending a `cloud.Service` to a catalog.
 
-Build & test:
+Build:
 
 ```bash
-go build ./...    # compile
-go vet ./...      # static analysis
-go test ./...     # unit + headless UI tests (demo data, downloads, navigation)
+go build ./...    # compile all packages
 ```
 
 ## Roadmap ideas
