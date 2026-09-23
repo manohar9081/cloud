@@ -10,8 +10,8 @@ import (
 )
 
 // Demo providers implement the full UI against built-in sample data: no
-// credentials, no network. Downloads write small local files so the whole
-// `g` flow can be exercised.
+// credentials and no network. Downloads write small local files so the whole
+// `g` flow can be explored.
 
 type DemoAWS struct{}
 
